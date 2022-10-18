@@ -55,6 +55,6 @@ func main() {
 	grpcServer := grpcSrv.ListenAndServe()
 
 	// Graceful shutdown
-	sd, _ := grpc.NewShutdown(grpcCfg.serverShutdownTimeout, logger)
+	sd, _ := grpc.NewShutdown(grpcCfg.ServerShutdownTimeout, logger)
 	sd.GracefulShutdown(stopCh, grpcServer)
 }
