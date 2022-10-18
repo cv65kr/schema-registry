@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package schema_registry.api.v1;
+
+option go_package = "https://github.com/cv65kr/schema-registry/api/v1";
+
+import "api/v1/request_response.proto";
+
+service SchemaRegistryService {
+
+    rpc CreateSchema (CreateSchemaRequest) returns (CreateSchemaResponse) {
+    }
+
+    rpc ValidateSchema (ValidateSchemaRequest) returns (ValidateSchemaResponse) {
+    }
+}

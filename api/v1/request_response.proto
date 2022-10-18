@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package schema_registry.api.v1;
+
+option go_package = "https://github.com/cv65kr/schema-registry/api/v1";
+
+import "api/v1/enum.proto";
+
+// START Create schema
+message CreateSchemaRequest {
+    // Version of schema
+    string version = 1;
+
+    // Name of schema e.g. serviceA/order_created
+    string name = 2;
+
+    // Schema in string (json structure)
+    string schema = 3;
+}
+
+message CreateSchemaResponse { 
+}
+// END Create schema
+
+
+// START Validate schema
+message ValidateSchemaRequest {
+    // Version of schema
+    string version = 1;
+
+    // Name of schema e.g. serviceA/order_created
+    string name = 2;
+
+    // Schema in string (json structure)
+    string schema = 3;
+}
+
+message ValidateSchemaResponse {
+    // Based on that we know if validation is successful or not
+    ValidateSchemaStatus status = 1;
+
+    // Returns possible errors in string[] 
+    repeated string errors = 2;
+
+}
+// END Validate schema

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package schema_registry.api.v1;
+
+option go_package = "https://github.com/cv65kr/schema-registry/api/v1";
+
+enum ValidateSchemaStatus {
+    // Used in case when send schema is valid
+    STATUS_VALID = 0;
+
+    // Used in case when send schema is invalid, e.g. field is missing, wrong type
+    STATUS_INVALID = 1;
+}

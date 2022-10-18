@@ -1,0 +1,45 @@
+package grpc
+
+import (
+	"go.uber.org/zap"
+	"time"
+)
+
+type Config struct {
+	Port                  int           `mapstructure:"grpc-port"`
+	ServerShutdownTimeout time.Duration `mapstructure:"server-shutdown-timeout"`
+}
+
+type Server struct {
+	logger *zap.Logger
+}
+
+func NewServer(config *Config, logger *zap.Logger) (*Server, error) {
+	srv := &Server{
+		config: config,
+		logger: logger,
+	}
+
+	return srv, nil
+}
+
+func (server *Server) ListenAndServe() *grpc.Server {
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", s.config.Port))
+	if err != nil {
+		s.logger.Fatal("Failed to listen", zap.Int("port", s.config.Port))
+	}
+
+	srv := grpc.NewServer()
+	server := health.NewServer()
+	reflection.Register(srv)
+	grpc_health_v1.RegisterHealthServer(srv, server)
+	server.SetServingStatus(s.config.ServiceName, grpc_health_v1.HealthCheckResponse_SERVING)
+
+	go func() {
+		if err := srv.Serve(listener); err != nil {
+			s.logger.Fatal("Failed to serve", zap.Error(err))
+		}
+	}()
+
+	return srv
+}
